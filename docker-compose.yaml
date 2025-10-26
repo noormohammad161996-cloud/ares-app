@@ -1,0 +1,34 @@
+version: '3.9'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile-backend
+    container_name: ares-backend
+    volumes:
+      - ./backend:/app
+    ports:
+      - "8083:8083"
+    networks:
+      - ares-network
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile-frontend
+    container_name: ares-frontend
+    volumes:
+      - ./frontend:/app
+    environment:
+      - BACKEND_URL=http://ares-backend:8083/api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - ares-network
+
+networks:
+  ares-network:
+    driver: bridge

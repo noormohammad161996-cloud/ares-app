@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Frontend</title>
+</head>
+<body style="background-color:black; color:yellow;">
+    <h3>HELLO FROM THE FRONTENDDD</h3>
+    <div id="data"></div>
+
+    <script>
+        // fetch data from Flask backend
+        fetch("http://127.0.0.1:8083/api")
+            .then(response => response.json())
+            .then(data => {
+                // Access the array inside data.data
+                document.getElementById("data").innerText = data.data.join(", ");
+            })
+            .catch(err => {
+                document.getElementById("data").innerText = "Error fetching data: " + err;
+            });
+    </script>
+</body>
+</html>
